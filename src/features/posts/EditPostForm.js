@@ -1,22 +1,36 @@
+import { useSelector, useDispatch } from 'react-redux';
 import { useState } from 'react';
-import { nanoid } from '@reduxjs/toolkit';
-import { useDispatch } from 'react-redux';
-import { postAdded } from './postsSlice';
+import { postUpdated } from './postsSlice';
+import { useParams, useHistory } from 'react-router-dom';
 
-const AddPostForm = () => {
-	const [title, setTitle] = useState('');
-	const [content, setContent] = useState('');
+export default function EditPostForm() {
+	const { postId } = useParams();
+
+	const post = useSelector(state =>
+		state.posts.find(post => post.id === postId)
+	);
+
+	const [title, setTitle] = useState(post.title);
+	const [content, setContent] = useState(post.content);
 
 	const dispatch = useDispatch();
+	const history = useHistory();
 
 	const onTitleChanged = e => setTitle(e.target.value);
 	const onContentChanged = e => setContent(e.target.value);
 
 	const onSavePostClicked = () => {
 		if (title && content) {
-			dispatch(postAdded(title, content));
+			dispatch(
+				postUpdated({
+					id: post.id,
+					title,
+					content,
+				})
+			);
 			setTitle('');
 			setContent('');
+			history.push(`/posts/${postId}`);
 		}
 	};
 
@@ -45,5 +59,4 @@ const AddPostForm = () => {
 			</form>
 		</section>
 	);
-};
-export default AddPostForm;
+}

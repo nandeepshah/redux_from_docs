@@ -1,5 +1,6 @@
 import { useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 
 const SinglePostPage = () => {
 	const { postId } = useParams();
@@ -7,8 +8,6 @@ const SinglePostPage = () => {
 	const post = useSelector(state =>
 		state.posts.find(post => post.id === postId)
 	);
-	console.log(postId);
-	console.log(typeof post?.id, typeof postId);
 
 	if (!post) {
 		return (
@@ -23,6 +22,9 @@ const SinglePostPage = () => {
 			<article className='post'>
 				<h2>{post.title}</h2>
 				<p className='post-content'>{post.content}</p>
+				<Link to={`/editPost/${post.id}`} className='button'>
+					Edit Post
+				</Link>
 			</article>
 		</section>
 	);

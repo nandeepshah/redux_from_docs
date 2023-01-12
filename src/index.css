@@ -133,6 +133,7 @@ section h1 {
 
 p.post-content {
 	margin-top: 10px;
+	text-align: justify;
 }
 
 .button {
