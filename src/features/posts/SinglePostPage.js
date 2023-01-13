@@ -1,13 +1,12 @@
 import { useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
 import { Link } from 'react-router-dom';
+import { getPostById } from './postsSlice';
 
 const SinglePostPage = () => {
 	const { postId } = useParams();
 
-	const post = useSelector(state =>
-		state.posts.find(post => post.id === postId)
-	);
+	const post = useSelector(state => getPostById(state, postId));
 
 	if (!post) {
 		return (
