@@ -1,15 +1,12 @@
 import { useSelector, useDispatch } from 'react-redux';
 import { useState } from 'react';
-import { postUpdated } from './postsSlice';
+import { postUpdated, getPostById } from './postsSlice';
 import { useParams, useHistory } from 'react-router-dom';
 
 export default function EditPostForm() {
 	const { postId } = useParams();
 
-	const post = useSelector(state =>
-		state.posts.find(post => post.id === postId)
-	);
-
+	const post = useSelector(state => getPostById(state, postId));
 	const [title, setTitle] = useState(post.title);
 	const [content, setContent] = useState(post.content);
 
